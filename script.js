@@ -28,29 +28,36 @@ for (let r = 0; r < rows.length; r++) {
 
 /* READ DATA FROM FIREBASE */
 
+/* READ DATA FROM FIREBASE */
+
 setInterval(() => {
 
-  fetch("https://parkingserver-964ae-default-rtdb.asia-southeast1.firebasedatabase.app/parking.json")
-    .then(res => res.json())
-    .then(data => {
-      
-      // Safety check in case the database is empty
-      if (!data) return; 
+fetch("https://parkingserver-964ae-default-rtdb.asia-southeast1.firebasedatabase.app/parking.json")
+.then(res => res.json())
+.then(data => {
 
-      // Loop directly through 'data' because Firebase already stripped the "parking" wrapper
-      Object.keys(data).forEach(id => {
-        const slot = document.getElementById(id);
-        if (!slot) return; 
+// Safely target the "parking" wrapper from your JSON
+const parkingData = data.parking;
 
-        // Force the background color directly based on the 1 or 0
-        if (data[id] == 1) {
-          slot.style.background = "#dc2626"; // Occupied = Red
-        } else {
-          slot.style.background = "#16a34a"; // Available = Green
-        }
-      });
+// If parkingData doesn't exist yet, stop here to prevent errors
+if(!parkingData) return;
 
-    })
-    .catch(err => console.error("Firebase fetch error:", err));
+// Loop only through the 4 specific slots you are using right now
+["A1","A4","A5","A6"].forEach(id => {
+
+  const slot = document.getElementById(id);
+  if(!slot) return;
+
+  // Read from parkingData instead of data
+  if(parkingData[id] == 1) {
+    slot.style.background = "#dc2626"; // 1 = Red
+  } else {
+    slot.style.background = "#16a34a"; // 0 = Green
+  }
+
+});
+
+})
+.catch(err => console.error(err));
 
 }, 1000);
