@@ -26,26 +26,27 @@ for (let r = 0; r < rows.length; r++) {
 
 /* READ DATA FROM FIREBASE */
 
+/* READ DATA FROM FIREBASE */
+
 setInterval(() => {
 
   fetch("https://parkingserver-964ae-default-rtdb.asia-southeast1.firebasedatabase.app/parking.json")
     .then(res => res.json())
     .then(data => {
       
-      // 1. Target the nested 'parking' object from your JSON
-      const parkingData = data.parking;
-      if (!parkingData) return; 
+      // Safety check in case the database is empty
+      if (!data) return; 
 
-      // 2. Loop through every slot Firebase sends back
-      Object.keys(parkingData).forEach(id => {
+      // Loop directly through 'data' because Firebase already stripped the "parking" wrapper
+      Object.keys(data).forEach(id => {
         const slot = document.getElementById(id);
         if (!slot) return; 
 
-        // 3. Add or remove the CSS class based on the 1 or 0
-        if (parkingData[id] == 1) {
-          slot.classList.add("occupied");
+        // Force the background color directly based on the 1 or 0
+        if (data[id] == 1) {
+          slot.style.background = "#dc2626"; // Occupied = Red
         } else {
-          slot.classList.remove("occupied");
+          slot.style.background = "#16a34a"; // Available = Green
         }
       });
 
