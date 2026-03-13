@@ -22,25 +22,34 @@ for (let r = 0; r < rows.length; r++) {
 
 /* READ DATA FROM FIREBASE */
 
+/* READ DATA FROM FIREBASE */
+
+/* READ DATA FROM FIREBASE */
+
 setInterval(() => {
 
-fetch("https://parkingserver-964ae-default-rtdb.asia-southeast1.firebasedatabase.app/parking.json")
-.then(res => res.json())
-.then(data => {
+  fetch("https://parkingserver-964ae-default-rtdb.asia-southeast1.firebasedatabase.app/parking.json")
+    .then(res => res.json())
+    .then(data => {
+      
+      // 1. Target the nested 'parking' object from your JSON
+      const parkingData = data.parking;
+      if (!parkingData) return; 
 
-["A1","A4","A5","A6"].forEach(id => {
+      // 2. Loop through every slot Firebase sends back
+      Object.keys(parkingData).forEach(id => {
+        const slot = document.getElementById(id);
+        if (!slot) return; 
 
-  const slot = document.getElementById(id);
-  if(!slot) return;
+        // 3. Add or remove the CSS class based on the 1 or 0
+        if (parkingData[id] == 1) {
+          slot.classList.add("occupied");
+        } else {
+          slot.classList.remove("occupied");
+        }
+      });
 
-  if(data[id] == 1)
-    slot.style.background = "#dc2626";
-  else
-    slot.style.background = "#16a34a";
+    })
+    .catch(err => console.error("Firebase fetch error:", err));
 
-});
-
-});
-
-},1000);
-
+}, 1000);
