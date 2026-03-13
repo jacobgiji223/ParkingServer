@@ -32,17 +32,36 @@ for (let r = 0; r < rows.length; r++) {
 
 /* GITHUB DEPLOYMENT TEST */
 
+/* READ DATA FROM FIREBASE */
+
 setInterval(() => {
 
-  // We are completely ignoring the database right now to test GitHub
-  ["A1","A4","A5","A6"].forEach(id => {
-    
-    const slot = document.getElementById(id);
-    if(!slot) return;
+fetch("https://parkingserver-964ae-default-rtdb.asia-southeast1.firebasedatabase.app/parking.json")
+.then(res => res.json())
+.then(data => {
 
-    // Force all 4 slots to turn green no matter what
-    slot.style.background = "#16a34a"; 
+// Safely target the "parking" wrapper from your JSON
+const parkingData = data.parking;
 
-  });
+// If parkingData doesn't exist yet, stop here to prevent errors
+if(!parkingData) return;
+
+// Loop only through the 4 specific slots you are using right now
+["A1","A4","A5","A6"].forEach(id => {
+
+  const slot = document.getElementById(id);
+  if(!slot) return;
+
+  // Read from parkingData instead of data
+  if(parkingData[id] == 1) {
+    slot.style.background = "#dc2626"; // 1 = Red
+  } else {
+    slot.style.background = "#16a34a"; // 0 = Green
+  }
+
+});
+
+})
+.catch(err => console.error(err));
 
 }, 1000);
