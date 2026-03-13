@@ -28,8 +28,6 @@ fetch("https://parkingserver-964ae-default-rtdb.asia-southeast1.firebasedatabase
 .then(res => res.json())
 .then(data => {
 
-if(!data) return;
-
 ["A1","A4","A5","A6"].forEach(id => {
 
   const slot = document.getElementById(id);
@@ -45,3 +43,4 @@ if(!data) return;
 });
 
 },1000);
+
