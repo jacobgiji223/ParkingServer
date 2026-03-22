@@ -48,8 +48,8 @@ setInterval(() => {
   .then(res => res.json())
   .then(data => {
 
-    const parkingData = data.parking;
-    if(!parkingData) return;
+    // Stop if we don't get data back
+    if(!data) return;
 
     let occupiedCount = 0;
     let availableCount = 0;
@@ -61,7 +61,8 @@ setInterval(() => {
       const slot = document.getElementById(id);
       if(!slot) return;
 
-      if(parkingData[id] == 1) {
+      // Check the data directly (data[id] instead of parkingData[id])
+      if(data[id] == 1) {
         slot.style.background = "#dc2626"; // Red (Occupied)
         occupiedCount++;
       } else {
@@ -87,6 +88,6 @@ setInterval(() => {
     if (detailsText) detailsText.innerText = `${availableCount} of 6 Open`;
 
   })
-  .catch(err => console.error(err));
+  .catch(err => console.error("Firebase fetch error:", err));
 
 }, 1000);
