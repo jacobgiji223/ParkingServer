@@ -37,10 +37,35 @@ header p {
   font-size: 20px;
 }
 
-.placeholder {
-  margin-top: 8px;
+/* Side-by-Side Layout for Chart and Text */
+.stats-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 15px;
+}
+
+.chart-container {
+  position: relative;
+  height: 120px;
+  width: 120px;
+}
+
+.stats-text {
+  text-align: left;
+}
+
+.stats-text h3 {
+  margin: 0;
+  font-size: 36px;
+  color: #16a34a; /* Green percentage text */
+}
+
+.stats-text p {
+  margin: 5px 0 0 0;
   color: #94a3b8;
-  font-style: italic;
+  font-size: 16px;
 }
 
 main {
@@ -59,5 +84,5 @@ main {
   text-align: center;
   font-size: 13px;
   font-weight: bold;
-  background: #dc2626; /* Occupied = Red */
+  background: #dc2626; /* Changed back to RED so untracked slots look full */
 }
