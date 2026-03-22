@@ -4,19 +4,29 @@
   <meta charset="UTF-8">
   <title>Parking Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
   <header>
     <h1>PARKING GRID</h1>
-    <p>All Slots Currently Occupied</p>
+    <p>Live Demo System Status</p>
   </header>
 
   <section class="info">
-    <h2>Rush Hours Today</h2>
-    <p class="placeholder">
-      To be updated based on parking usage analysis.
-    </p>
+    <h2 style="text-align: center;">Live Capacity</h2>
+    
+    <div class="stats-wrapper">
+      <div class="chart-container">
+        <canvas id="parkingChart"></canvas>
+      </div>
+      
+      <div class="stats-text">
+        <h3 id="percent-text">Calculating%</h3>
+        <p id="details-text">... of 6 Open</p>
+      </div>
+    </div>
+
   </section>
 
   <main>
